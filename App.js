@@ -7,7 +7,13 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import Flashcards from './src/components/Flashcards';
+
+import reducer from './src/reducers';
+
+const store = createStore(reducer);
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +28,9 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <View style={styles.container}>
-      <Flashcards />
+      <Provider store={store}>
+        <Flashcards />
+      </Provider>
     </View>
   );
 }

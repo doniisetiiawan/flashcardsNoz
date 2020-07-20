@@ -1,46 +1,49 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-
-import { MockDecks } from '../../data/Mocks';
+import { connect } from 'react-redux';
 import Deck from './Deck';
 import DeckCreation from './DeckCreation';
+import { addDeck, reviewDeck } from '../../actions/creators';
 
 class DecksScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { decks: MockDecks };
-  }
-
-  _createDeck = () => {
-    console.warn('Data saving not implemented');
-    this.props.navigation.navigate('CardCreation');
+  _createDeck = (name) => {
+    const createDeckAction = addDeck(name);
+    this.props.createDeck(createDeckAction);
+    this.props.navigation.navigate('CardCreation', {
+      deckID: createDeckAction.data.id,
+    });
   };
 
-  _addCards = () => {
-    console.warn('Data saving not implemented');
-    this.props.navigation.navigate('CardCreation');
+  _addCards = (deckID) => {
+    this.props.navigation.navigate('CardCreation', {
+      deckID,
+    });
   };
 
-  _review = () => {
-    console.warn('Actual reviews not implemented');
+  _review = (deckID) => {
+    this.props.reviewDeck(deckID);
     this.props.navigation.navigate('Review');
   };
 
-  _mkDeckViews = () => {
-    if (!this.state.decks) {
+  _mkDeckViews() {
+    if (!this.props.decks) {
       return null;
     }
 
-    return this.state.decks.map((deck) => (
+    return this.props.decks.map((deck) => (
       <Deck
         deck={deck}
-        count={deck.cards.length}
+        count={this.props.counts[deck.id]}
         key={deck.id}
-        add={this._addCards}
-        review={this._review}
+        add={() => {
+          this._addCards(deck.id);
+        }}
+        review={() => {
+          this._review(deck.id);
+        }}
       />
     ));
-  };
+  }
 
   render() {
     return (
@@ -52,4 +55,24 @@ class DecksScreen extends Component {
   }
 }
 
-export default DecksScreen;
+const mapDispatchToProps = (dispatch) => ({
+  createDeck: (deckAction) => {
+    dispatch(deckAction);
+  },
+  reviewDeck: (deckID) => {
+    dispatch(reviewDeck(deckID));
+  },
+});
+
+const mapStateToProps = (state) => ({
+  decks: state.decks,
+  counts: state.decks.reduce((sum, deck) => {
+    sum[deck.id] = deck.cards.length;
+    return sum;
+  }, {}),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DecksScreen);

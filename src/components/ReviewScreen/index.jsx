@@ -1,11 +1,15 @@
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import ViewCard from './ViewCard';
-import { MockReviews } from '../../data/Mocks';
 import mkReviewSummary from './ReviewSummary';
 import colors from '../../styles/colors';
+import {
+  nextReview,
+  stopReview,
+} from '../../actions/creators';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,11 +22,10 @@ const styles = StyleSheet.create({
 class ReviewScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       numReviewed: 0,
       numCorrect: 0,
-      currentReview: 0,
-      reviews: MockReviews,
     };
   }
 
@@ -38,39 +41,37 @@ class ReviewScreen extends Component {
   };
 
   _nextReview = () => {
-    this.setState({
-      currentReview: this.state.currentReview + 1,
-    });
+    this.props.nextReview();
   };
 
   _quitReviewing = () => {
-    console.warn('Not implemented');
-    this.props.navigation.navigate('Home');
+    this.props.stopReview();
+    this.props.navigation.goBack();
   };
 
-  _contents = () => {
+  _contents() {
     if (
-      !this.state.reviews
-      || this.state.reviews.length === 0
+      !this.props.reviews
+      || this.props.reviews.length === 0
     ) {
       return null;
     }
 
     if (
-      this.state.currentReview < this.state.reviews.length
+      this.props.currentReview < this.props.reviews.length
     ) {
       return (
         <ViewCard
           onReview={this.onReview}
           continue={this._nextReview}
           quit={this._quitReviewing}
-          {...this.state.reviews[this.state.currentReview]}
+          {...this.props.reviews[this.props.currentReview]}
         />
       );
     }
     const percent = this.state.numCorrect / this.state.numReviewed;
     return mkReviewSummary(percent, this._quitReviewing);
-  };
+  }
 
   render() {
     return (
@@ -81,4 +82,21 @@ class ReviewScreen extends Component {
   }
 }
 
-export default ReviewScreen;
+const mapDispatchToProps = (dispatch) => ({
+  nextReview: () => {
+    dispatch(nextReview());
+  },
+  stopReview: () => {
+    dispatch(stopReview());
+  },
+});
+
+const mapStateToProps = (state) => ({
+  reviews: state.currentReview.questions,
+  currentReview: state.currentReview.currentQuestionIndex,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ReviewScreen);
