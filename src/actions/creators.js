@@ -4,6 +4,7 @@ import {
   REVIEW_DECK,
   STOP_REVIEW,
   NEXT_REVIEW,
+  LOAD_DATA,
 } from './types';
 
 import Card from '../data/Card';
@@ -32,4 +33,9 @@ export const stopReview = () => ({
 export const nextReview = () => ({
   type: NEXT_REVIEW,
   data: {},
+});
+
+export const loadData = (data) => ({
+  type: LOAD_DATA,
+  data,
 });
