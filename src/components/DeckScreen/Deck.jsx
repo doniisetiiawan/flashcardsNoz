@@ -37,7 +37,6 @@ class Deck extends Component {
   };
 
   _addCards = () => {
-    console.warn('Not implemented');
     this.props.add();
   };
 

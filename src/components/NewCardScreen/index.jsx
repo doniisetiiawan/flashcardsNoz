@@ -54,12 +54,14 @@ class NewCard extends Component {
       <View>
         <LabeledInput
           label="Front"
+          value={this.state.front}
           clearOnSubmit={false}
           onEntry={this._handleFront}
           onChange={this._handleFront}
         />
         <LabeledInput
           label="Back"
+          value={this.state.back}
           clearOnSubmit={false}
           onEntry={this._handleBack}
           onChange={this._handleBack}
@@ -72,21 +74,12 @@ class NewCard extends Component {
           <NormalText>Create Card</NormalText>
         </Button>
 
-        <View style={styles.buttonRow}>
-          <Button
-            style={styles.secondaryButton}
-            onPress={this._doneCreating}
-          >
-            <NormalText>Done</NormalText>
-          </Button>
-
-          <Button
-            style={styles.secondaryButton}
-            onPress={this._reviewDeck}
-          >
-            <NormalText>Review Deck</NormalText>
-          </Button>
-        </View>
+        <Button
+          style={styles.secondaryButton}
+          onPress={this._doneCreating}
+        >
+          <NormalText>Done</NormalText>
+        </Button>
       </View>
     );
   }

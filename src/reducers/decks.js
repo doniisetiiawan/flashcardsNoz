@@ -5,6 +5,11 @@ import {
 } from '../actions/types';
 import { writeDecks } from '../storage/decks';
 
+function saveDecks(state) {
+  writeDecks(state);
+  return state;
+}
+
 function decksWithNewCard(oldDecks, card) {
   const newState = oldDecks.map((deck) => {
     if (deck.id === card.deckID) {
@@ -15,11 +20,6 @@ function decksWithNewCard(oldDecks, card) {
   });
   saveDecks(newState);
   return newState;
-}
-
-function saveDecks(state) {
-  writeDecks(state);
-  return state;
 }
 
 const reducer = (state = [], action) => {
