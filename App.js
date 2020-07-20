@@ -1,15 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
+/* eslint-disable react/jsx-filename-extension,react/style-prop-object */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import { StyleSheet, View } from 'react-native';
+import Flashcards from './src/components/Flashcards';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,3 +11,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Flashcards />
+    </View>
+  );
+}
