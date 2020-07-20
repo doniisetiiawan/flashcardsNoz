@@ -32,6 +32,7 @@ function Flashcards() {
         <Stack.Screen
           name="CardCreation"
           component={NewCard}
+          options={{ title: 'Create Card' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
