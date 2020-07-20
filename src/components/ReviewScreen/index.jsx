@@ -45,6 +45,7 @@ class ReviewScreen extends Component {
 
   _quitReviewing = () => {
     console.warn('Not implemented');
+    this.props.navigation.navigate('Home');
   };
 
   _contents = () => {

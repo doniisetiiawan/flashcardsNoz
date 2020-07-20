@@ -9,9 +9,9 @@ class DeckCreation extends Component {
     this.state = { showingNameField: false };
   }
 
-  _newDeck = () => {
-    console.warn('Not implemented');
+  _newDeck = (name) => {
     this.setState({ showingNameField: false });
+    this.props.create(name);
   };
 
   _showField = () => {

@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
 
 class Deck extends Component {
   _review = () => {
-    console.warn('Not implemented');
+    this.props.review();
   };
 
   _addCards = () => {
     console.warn('Not implemented');
+    this.props.add();
   };
 
   render() {

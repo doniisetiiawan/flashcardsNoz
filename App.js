@@ -1,14 +1,21 @@
 /* eslint-disable react/jsx-filename-extension,react/style-prop-object */
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import Flashcards from './src/components/Flashcards';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...Platform.select({
+      ios: { paddingTop: 20 },
+      android: { paddingTop: StatusBar.currentHeight },
+    }),
   },
 });
 

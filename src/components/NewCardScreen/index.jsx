@@ -27,15 +27,18 @@ class NewCard extends Component {
   };
 
   _createCard = () => {
-    console.warn('Not implemented');
+    console.warn('Data saving not implemented');
+    this.props.navigation.navigate('CardCreation');
   };
 
   _reviewDeck = () => {
     console.warn('Not implemented');
+    this.props.navigation.navigate('Review');
   };
 
   _doneCreating = () => {
     console.warn('Not implemented');
+    this.props.navigation.navigate('Home');
   };
 
   render() {
