@@ -11,8 +11,6 @@ function decksWithNewCard(oldDecks, card) {
 }
 
 const reducer = (state = [], action) => {
-  console.warn('Changes are not persisted to disk');
-
   switch (action.type) {
     case ADD_DECK:
       return state.concat(action.data);
